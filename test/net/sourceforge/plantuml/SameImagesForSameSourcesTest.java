@@ -75,7 +75,7 @@ public class SameImagesForSameSourcesTest {
 		String svgCodeEn = plantUmlToSvg(diagramExample);
 
 		assertNotNull(svgCodeEn);
-		assertFalse(svgCodeEn.isBlank());
+		assertFalse(svgCodeEn.isEmpty());
 
 		System.setProperty(SYSTEM_PROPERTY_LANGUAGE, "zh");
 		System.setProperty(SYSTEM_PROPERTY_COUNTRY, "HK");
@@ -85,7 +85,7 @@ public class SameImagesForSameSourcesTest {
 		String svgCodeCh = plantUmlToSvg(diagramExample);
 
 		assertNotNull(svgCodeCh);
-		assertFalse(svgCodeCh.isBlank());
+		assertFalse(svgCodeCh.isEmpty());
 
 		assertEquals(svgCodeEn, svgCodeCh);
 	}
@@ -111,7 +111,7 @@ public class SameImagesForSameSourcesTest {
 	@Test
 	public void ensureCheckMetadataDoesNotRecreateSvgIfSourceFileDoesNotChange() throws IOException {
 		File pumlFile = new File(tempDirectory, "diagram.puml");
-		Files.writeString(pumlFile.toPath(), diagramExample, StandardCharsets.UTF_8);
+		Files.write(pumlFile.toPath(), diagramExample.getBytes(StandardCharsets.UTF_8));
 
 		System.setProperty(SYSTEM_PROPERTY_LANGUAGE, "en");
 		System.setProperty(SYSTEM_PROPERTY_COUNTRY, "GB");
@@ -228,7 +228,7 @@ public class SameImagesForSameSourcesTest {
 			DiagramDescription svgDescription = sourceReader.outputImage(
 							outputStream, new FileFormatOption(FileFormat.SVG));
 
-			svgCode = outputStream.toString(StandardCharsets.UTF_8);
+			svgCode = outputStream.toString(StandardCharsets.UTF_8.name());
 		}
 
 		return svgCode;
